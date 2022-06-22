@@ -13,8 +13,8 @@ const params = {
     bloomRadius: 0
 };
 
-const container = document.getElementById( 'container' );
-const renderer = new THREE.WebGLRenderer( { antialias: true } );
+const container = document.querySelector("#container");
+const renderer = new THREE.WebGLRenderer( {antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.toneMapping = THREE.ReinhardToneMapping;

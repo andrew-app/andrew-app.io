@@ -1,5 +1,36 @@
-#container {
+/* #container {
     position: fixed;
     top: 0;
     left: 0;
+} */
+
+#c {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    z-index: -1;
+    
+  }
+  .diagram {
+    display: inline-block;
+    width: 5em;
+    height: 3em;
+    border: 1px solid black;
+  }
+  .top {
+    float: none;
+    margin-left: 40%;
+    width: 20vw;
 }
+  .left {
+    float: left;
+    margin-right: .25em;
+  }
+  .right {
+    float: right;
+    margin-left: .25em;
+  }
+
