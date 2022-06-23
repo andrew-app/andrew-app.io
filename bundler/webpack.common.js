@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 
 module.exports = {
-    entry: path.resolve(__dirname, '../src/multicanv.js'),
+    entry: path.resolve(__dirname, '../src/multicanv.ts'),
     mode: 'development',
     output:
     {
@@ -32,11 +32,9 @@ module.exports = {
                 use: ['html-loader']
             },
             {
-                test: /\.js$/,
+                test: /\.tsx?$/,
+                use: 'ts-loader',
                 exclude: /node_modules/,
-                use:[
-                    'babel-loader'
-                ]
             },
             // CSS
             {
@@ -93,9 +91,12 @@ module.exports = {
                   }
                 ]
             }
+        ],
 
+    },
 
-        ]
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
     }
         
 }

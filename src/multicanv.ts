@@ -7,11 +7,11 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import gltfPath from "../assets/title.gltf";
 
 function main() {
-    const canvas = document.querySelector('#c');
+    const canvas:HTMLCanvasElement = document.querySelector('#c')!;
     const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
     
   
-    function makeScene(elem) {
+    function makeScene(elem:Element) {
       const scene = new THREE.Scene();
   
       const fov = 50;
@@ -21,7 +21,6 @@ function main() {
       const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
       camera.position.set(0, 0, 2);
       camera.lookAt(0, 0, 0);
-  
       {
         const color = 0xFFFFFF;
         const intensity = 1;
@@ -29,16 +28,18 @@ function main() {
         light.position.set(-1, 2, 4);
         scene.add(light);
       }
+
+      const mesh = new THREE.Object3D
   
-      return {scene, camera, elem};
+      return {scene, camera, elem, mesh};
     }
 
     function setupTitle() {
-      const sceneInfo = makeScene(document.querySelector('#title'));
+      const sceneInfo = makeScene(document.querySelector('#title')!);
 
       const loader = new GLTFLoader();
       
-      loader.load(gltfPath, gltf => {
+      loader.load(gltfPath, (gltf: { scene: any; }) => {
         const model = gltf.scene;
         sceneInfo.scene.add(model);
     });
@@ -52,19 +53,19 @@ function main() {
     }
   
     function setupScene1() {
-      const sceneInfo = makeScene(document.querySelector('#box'));
+      const sceneInfo = makeScene(document.querySelector('#box')!);
       const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
       const material = new THREE.MeshPhongMaterial({color: 'red'});
       const color = new THREE.Color("rgb(0, 0, 0)")
       sceneInfo.scene.background = color;
       const mesh = new THREE.Mesh(geometry, material);
-      sceneInfo.scene.add(mesh);
       sceneInfo.mesh = mesh;
+      sceneInfo.scene.add(mesh);
       return sceneInfo;
     }
   
     function setupScene2() {
-      const sceneInfo = makeScene(document.querySelector('#pyramid'));
+      var sceneInfo = makeScene(document.querySelector('#pyramid')!);
       const radius = .8;
       const widthSegments = 4;
       const heightSegments = 2;
@@ -75,9 +76,9 @@ function main() {
       });
       const color = new THREE.Color("rgb(0, 0, 0)")
       sceneInfo.scene.background = color;
-      const mesh = new THREE.Mesh(geometry, material);
-      sceneInfo.scene.add(mesh);
+      const mesh= new THREE.Mesh(geometry, material);
       sceneInfo.mesh = mesh;
+      sceneInfo.scene.add(mesh)
       return sceneInfo;
     }
     
@@ -87,7 +88,7 @@ function main() {
     
     
   
-    function resizeRendererToDisplaySize(renderer) {
+    function resizeRendererToDisplaySize(renderer: THREE.WebGLRenderer) {
       const canvas = renderer.domElement;
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
@@ -98,7 +99,7 @@ function main() {
       return needResize;
     }
   
-    function rendenerSceneInfo(sceneInfo) {
+    function rendenerSceneInfo(sceneInfo: { scene: THREE.Scene; camera: THREE.PerspectiveCamera; elem: Element; mesh:THREE.Object3D }) {
       const {scene, camera, elem} = sceneInfo;
   
       // get the viewport relative position opf this element
@@ -125,8 +126,8 @@ function main() {
       renderer.render(scene, camera);
     }
   
-    function render(time) {
-      time *= 0.001;
+    function render(time: number) {
+      time *= 0.01;
   
       resizeRendererToDisplaySize(renderer);
   
@@ -137,7 +138,6 @@ function main() {
       sceneInfo1.mesh.rotation.y = time * .1;
       sceneInfo2.mesh.rotation.y = time * .1;
       
-  
       rendenerSceneInfo(sceneInfo1);
       rendenerSceneInfo(sceneInfo2);
       rendenerSceneInfo(sceneTitle);
