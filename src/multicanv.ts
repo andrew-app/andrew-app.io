@@ -9,7 +9,7 @@ import gltfPath from "../assets/title.gltf";
 function main() {
     const canvas:HTMLCanvasElement = document.querySelector('#c')!;
     const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
-    
+    renderer.toneMapping = THREE.ReinhardToneMapping;
   
     function makeScene(elem:Element) {
       const scene = new THREE.Scene();
@@ -39,14 +39,17 @@ function main() {
 
       const loader = new GLTFLoader();
       
-      loader.load(gltfPath, (gltf: { scene: any; }) => {
+      loader.load(gltfPath, (gltf) => {
         const model = gltf.scene;
         sceneInfo.scene.add(model);
     });
 
       sceneInfo.camera.position.set(1.6,0.3,1);
 
-      
+      sceneInfo.scene.add( new THREE.AmbientLight( 0x404040 ) );
+
+      const pointLight = new THREE.PointLight( 0xffffff, 1 );
+      sceneInfo.camera.add( pointLight );
       const color = new THREE.Color("rgb(0, 0, 0)")
       sceneInfo.scene.background = color;
       return sceneInfo;

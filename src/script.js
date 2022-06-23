@@ -15,6 +15,7 @@ const params = {
 
 const container = document.querySelector("#container");
 const renderer = new THREE.WebGLRenderer( {antialias: true } );
+
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.toneMapping = THREE.ReinhardToneMapping;
